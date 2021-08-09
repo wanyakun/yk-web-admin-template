@@ -1,4 +1,5 @@
 # yk-web-admin-template
+基于Element UI的Admin站点模板
 
 ## Project setup
 ```
@@ -27,3 +28,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
