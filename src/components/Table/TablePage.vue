@@ -560,16 +560,16 @@ export default {
   margin: auto
 }
 .dialog-show-title {
-  & /deep/.el-dialog__body {
+  & ::v-deep.el-dialog__body {
     padding: 0;
   }
   .dialog-form {
     padding: 0 40px 20px;
   }
-  /deep/ .el-dialog__header {
+  ::v-deep .el-dialog__header {
     padding: 0;
   }
-  /deep/ .el-dialog__footer {
+  ::v-deep .el-dialog__footer {
     text-align: center;
   }
 }
