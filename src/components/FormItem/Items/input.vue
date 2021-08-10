@@ -3,8 +3,8 @@
     <el-input
       :class="{input: true, 'is-error el-form-item': isError}"
       :value="data.value"
-      @input="onInputChange(itemKey, $event)"
       v-bind="[{placeholder: '请输入'}, data]"
+      @input="onInputChange(itemKey, $event)"
       @blur="$emit('blur')"
     />
   </div>

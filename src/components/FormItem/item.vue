@@ -1,5 +1,5 @@
 <template>
-  <div :is="item" v-bind="itemProp" :isError="isError" @blur="$emit('blur')" @change="$emit('change')"></div>
+  <div :is="item" v-bind="itemProp" :is-error="isError" @blur="$emit('blur')" @change="$emit('change')" />
 </template>
 
 <script>

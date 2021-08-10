@@ -14,10 +14,10 @@ const downloadBlob = response => {
   const blob = response.data
   const disposition = response.headers['content-disposition']
   let filename = ''
-  const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-  const matches = filenameRegex.exec(disposition);
+  const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/
+  const matches = filenameRegex.exec(disposition)
   if (matches !== null && matches[1]) {
-    filename = matches[1].replace(/['"]/g, '');
+    filename = matches[1].replace(/['"]/g, '')
   }
   const reader = new FileReader()
   reader.readAsDataURL(blob)

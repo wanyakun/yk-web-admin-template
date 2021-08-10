@@ -2,8 +2,8 @@
   <div v-show="data.status !== false" class="item" :style="data.style">
     <item-container v-bind="containerProps" :label="data.label" :max-label-width="maxLabelWidth">
       <div class="right">
-        <div v-if="data.render" class="value" v-html="data.render(data)"></div>
-        <form-item-component v-else v-bind="itemProps" :is-error="validateState === 'error'" @blur="onBlur" @change="onChange"></form-item-component>
+        <div v-if="data.render" class="value" v-html="data.render(data)" />
+        <form-item-component v-else v-bind="itemProps" :is-error="validateState === 'error'" @blur="onBlur" @change="onChange" />
         <form-item-message v-if="validateState === 'error'" class="message">{{ validateMessage }}</form-item-message>
       </div>
     </item-container>

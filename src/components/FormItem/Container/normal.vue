@@ -1,6 +1,12 @@
 <template>
   <div class="normal-container">
-    <p v-if="label !== undefined" :key="label" :data-test="label" :class="{label: true, required}" :style="[{width:maxLabelWidth + 'px'}, labelStyle]">{{this.label}}</p>
+    <p
+      v-if="label !== undefined"
+      :key="label"
+      :data-test="label"
+      :class="{label: true, required}"
+      :style="[{width:maxLabelWidth + 'px'}, labelStyle]"
+    >{{ label }}</p>
     <slot />
   </div>
 </template>
