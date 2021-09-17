@@ -133,6 +133,7 @@ module.exports = {
                 }
               }
             })
+          config.optimization.concatenateModules(true)
           config.optimization.runtimeChunk('single')
         }
       )

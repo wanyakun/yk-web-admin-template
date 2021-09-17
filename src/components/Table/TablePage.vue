@@ -37,7 +37,7 @@
             <!-- 操作按钮 -->
             <div v-else>
               <template v-for="btn of tableActions">
-                <el-button :key="btn.key" :size="size" v-bind="btn.data.props" @click="btn.data.on.click(scope)">
+                <el-button :key="btn.key" :size="size" v-bind="btn.data.props" @click="onActionButtonClick(btn, scope)">
                   {{ typeof btn.data.props.label === 'string' ? btn.data.props.label: '' }}
                 </el-button>
               </template>
@@ -85,7 +85,7 @@ import dayjs from 'dayjs'
 import CustomForm from '../Form/index'
 import clone from 'clone'
 import Pagination from '../Pagination/index'
-import request from '@/network/request'
+import { Request } from '@/network/request'
 import { formatFormData } from '../../utils/tools'
 
 const callbacks = {
@@ -259,7 +259,7 @@ export default {
           if (item.data.value === undefined) item.data.value = undefined
           if ((item.type === 'Select' || item.type === 'Transfer' || item.type === 'Cascader') && !item.data.options) item.data.options = []
           if (item.type === 'Button') {
-            item.data = defaultBtn[item.key]
+            item.data = defaultBtn[item.key] || item.data
             const { interactionType } = item
             if (interactionType) {
               this.setInteractionForItem(item, 'button')
@@ -283,19 +283,18 @@ export default {
     },
     async doSearch() {
       // 搜索
-      this.loading = true
       const { searchApi } = this.data.apis
       const { path, handleResult } = searchApi
       const targetParams = this.getSearchTargetParams()
-      const result = await request.post(path, targetParams).finally(() => {
-        this.loading = false
-      })
+      this.loading = true
+      const request = new Request(path, targetParams)
+      const result = await request.start().finally(this.loading = false)
       let targetResult = { data: [], total: 0 }
       if (handleResult) {
         targetResult = this.execStringOrFunction(handleResult, result)
       } else {
-        targetResult.data = result.resultContent.data
-        targetResult.total = result.resultContent.totalCount
+        targetResult.data = result.data
+        targetResult.total = result.totalCount
       }
       this.dataSource = targetResult.data
       this.total = targetResult.total
@@ -355,7 +354,8 @@ export default {
       const targetParams = this.getSearchTargetParams()
       delete targetParams.pageNo
       delete targetParams.pageSize
-      await request.post(path, targetParams, { responseType: 'blob' })
+      const request = new Request(path, targetParams, { responseType: 'blob' })
+      await request.start()
       this.$message.success('导出成功')
     },
     onResetForm(form, data) {
@@ -377,7 +377,8 @@ export default {
         item.data.on.click = async(data = { row: {}}) => {
           const params = from === 'actions' ? data.row : this.getSearchTargetParams()
           const { path = this.data.apis[apiKey] } = this.data.apis[apiKey]
-          await request.post(path, params)
+          const request = new Request(path, params)
+          await request.start()
           if (callback) {
             this.execStringOrFunction(callback, params)
           }
@@ -447,7 +448,8 @@ export default {
       const { path = targetApi, handleParams = data => data, handleResult } = targetApi
       data.status = !data.status
       const targetParams = this.execStringOrFunction(handleParams, data)
-      const result = await request.post(path, targetParams)
+      const request = new Request(path, targetParams)
+      const result = await request.start()
       let targetResult = result
       if (handleResult) {
         targetResult = this.execStringOrFunction(handleResult, result)
@@ -456,10 +458,16 @@ export default {
         this.$message.success('操作成功')
       }
     },
+    // table中按钮点击
+    onActionButtonClick(btn, row) {
+      btn.data.on.click(this, row)
+    },
     /** 弹窗相关 **/
     onDialogFormChange(key, value) {
       const item = this.dialogForm.form.find(item => item.key === key)
-      item.data.value = value
+      if (item && item.data) {
+        item.data.value = value
+      }
     },
     onDialogFormSubmit() {
       // 弹窗提交按钮点击
@@ -486,7 +494,8 @@ export default {
     async dialogFormDoSubmit(target) {
       const { path, handleParams = props => props, handleResult } = this.data.apis[this.dialogForm.apiKey]
       const targetParams = this.execStringOrFunction(handleParams, target)
-      const result = await request.post(path, targetParams)
+      const request = new Request(path, targetParams)
+      const result = await request.start()
       let targetResult = result
       if (handleResult) {
         targetResult = this.execStringOrFunction(handleResult, result)

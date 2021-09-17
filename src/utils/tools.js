@@ -42,3 +42,26 @@ export const formatFormData = (form = [], cbs = []) => {
   })
   return targetForm
 }
+
+export const formatTablePageData = (data = {}) => {
+  const { tableConfig, apis, isMountedSearch = true, variables } = data
+  if (!data.forms) data.forms = {}
+  const { searchForm, createForm } = data.forms
+  if (!searchForm) data.forms.searchForm = []
+  if (!createForm) data.forms.createForm = []
+
+  if (!tableConfig) data.tableConfig = {}
+  const { config, columns, actions } = data.tableConfig
+  if (!config) data.tableConfig.config = {}
+  if (!columns) data.tableConfig.columns = []
+  if (!actions) data.tableConfig.actions = []
+
+  if (!apis) data.apis = {}
+  const { searchApi } = data.apis
+  if (!searchApi && isMountedSearch) {
+    console.error('请配置搜索接口参数 searchApi')
+  }
+
+  if (!variables) data.variables = {}
+  return data
+}

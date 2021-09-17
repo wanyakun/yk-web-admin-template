@@ -1,17 +1,14 @@
-import request from '@/network/request'
-import { exception } from '../decorator'
+import { Request } from '@/network/request'
 
 class AppApi {
-  @exception({ needMessage: true })
   async appOfCurrentUser(params) {
-    const data = await request.post('/app/currentAuthor', params)
-    return data
+    const request = new Request('/app/currentAuthor', params)
+    return await request.start()
   }
 
-  @exception({ needMessage: true, needLoading: true })
   async appDetail(params) {
-    const data = await request.post('/app/detail', params)
-    return data
+    const request = new Request('/app/detail', params)
+    return await request.start()
   }
 }
 

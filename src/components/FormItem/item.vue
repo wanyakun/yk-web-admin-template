@@ -7,13 +7,16 @@ import itemInput from './Items/input'
 import itemSelect from './Items/select'
 import itemButton from './Items/button'
 import itemSwitch from './Items/switch'
+import itemTransfer from './Items/transfer'
+
 export default {
   name: 'FormItemComponent',
   components: {
     itemInput,
     itemSelect,
     itemButton,
-    itemSwitch
+    itemSwitch,
+    itemTransfer
   },
   inheritAttrs: true,
   props: ['type', 'itemKey', 'data', 'isError'],

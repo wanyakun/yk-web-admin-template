@@ -17,7 +17,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false,
+  sidebarLogo: true,
 
   /**
    * 是否启用权限控制，独立使用的时候建议使用权限控制，嵌入到CMP中的时候可以取消权限控制，完全交由CMP控制，也可以开启增加URL级别的控制, 默认为true

@@ -9,9 +9,3 @@ export { default as throttle } from './throttle'
 
 // loading
 export * from './loading'
-
-// exception
-export * from './exception'
-
-// http
-export * from './http'

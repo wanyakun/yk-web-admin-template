@@ -4,9 +4,9 @@ export default [
     url: '/user/login',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: {
+      code: 1,
+      message: 'SUCCESS',
+      data: {
         userId: 1,
         userName: 'admin',
         token: '12345678901234567890'
@@ -19,9 +19,9 @@ export default [
     url: '/user/info',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: {
+      code: 1,
+      message: 'SUCCESS',
+      data: {
         userId: 1,
         userName: 'admin'
       }
@@ -33,9 +33,9 @@ export default [
     url: '/user/logout',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: {
+      code: 1,
+      message: 'SUCCESS',
+      data: {
       }
     }
   }

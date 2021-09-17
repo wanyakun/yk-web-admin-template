@@ -17,7 +17,7 @@
 
 <script>
 import FormItem from '../FormItem/index'
-import request from '@/network/request'
+import { Request } from '@/network/request'
 import objectAssign from '../../utils/merge'
 
 const actions = {
@@ -229,7 +229,8 @@ export default {
     async sendApi(api, callback, params = {}) {
       const { path = '', handleParams = data => data } = api
       const targetParams = handleParams.call(this, params)
-      const result = await request.post(path, targetParams)
+      const request = new Request(path, targetParams)
+      const result = await request.start()
       callback(result)
     },
     // validate() {
@@ -280,7 +281,7 @@ export default {
     },
     /** 清理Form下每个Item的验证信息 **/
     clearValidatedMessage() {
-      this.$refs.form.forEach((item) => {
+      this.$refs.form && this.$refs.form.forEach((item) => {
         item.clearValidatedMessage()
       })
     },

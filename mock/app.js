@@ -45,18 +45,18 @@ export default [
     url: '/app/currentAuthor',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: apps
+      code: 1,
+      message: 'SUCCESS',
+      data: apps
     }
   },
   {
     url: '/app/findByPage',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: {
+      code: 1,
+      message: 'SUCCESS',
+      data: {
         pageNo: 1,
         pageSize: 10,
         totalCount: 3,
@@ -68,45 +68,45 @@ export default [
     url: '/app/add',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: []
+      code: 1,
+      message: 'SUCCESS',
+      data: []
     }
   },
   {
     url: '/app/update',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: []
+      code: 1,
+      message: 'SUCCESS',
+      data: []
     }
   },
   {
     url: '/app/delete',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: []
+      code: 1,
+      message: 'SUCCESS',
+      data: []
     }
   },
   {
     url: '/app/export',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: []
+      code: 1,
+      message: 'SUCCESS',
+      data: []
     }
   },
   {
     url: '/app/detail',
     type: 'post',
     response: {
-      result: 1,
-      resultMessage: 'SUCCESS',
-      resultContent: apps[0]
+      code: 1,
+      message: 'SUCCESS',
+      data: apps[0]
     }
   }
 ]

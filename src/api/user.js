@@ -1,23 +1,19 @@
-import request from '@/network/request'
-import { exception } from '../decorator'
+import { Request } from '@/network/request'
 
 class UserApi {
-  @exception({ needMessage: true })
   async login(params) {
-    const data = await request.post('/user/login', params)
-    return data
+    const request = new Request('/user/login', params)
+    return await request.showMessage(true).start()
   }
 
-  @exception({ needMessage: true })
   async getInfo(params) {
-    const data = await request.post('/user/info', params)
-    return data
+    const request = new Request('/user/info', params)
+    return await request.showMessage(true).start()
   }
 
-  @exception({ needMessage: true })
   async logout(params) {
-    const data = await request.post('/user/logout', params)
-    return data
+    const request = new Request('/user/logout', params)
+    return await request.showMessage(true).start()
   }
 }
 

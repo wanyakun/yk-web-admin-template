@@ -11,7 +11,7 @@ export default [
         path: 'list',
         name: 'AppList',
         component: () => import('@/views/app/list'),
-        meta: { title: '应用列表', icon: 'sendpoints' }
+        meta: { title: '应用列表', icon: 'eye' }
       },
       {
         path: 'detail/:id',
