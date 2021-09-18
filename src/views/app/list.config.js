@@ -88,17 +88,27 @@ export default {
       }
     ],
     addForm: [
+      // {
+      //   key: 'platform',
+      //   type: 'Select',
+      //   label: '平台',
+      //   data: {
+      //     clearable: true,
+      //     options: platformOptions
+      //   },
+      //   rules: [
+      //     { required: true, message: '请选择平台', trigger: 'change' }
+      //   ]
+      // },
       {
         key: 'platform',
-        type: 'Select',
+        type: 'Radio',
         label: '平台',
         data: {
-          clearable: true,
+          defaultValue: 1,
+          value: 1,
           options: platformOptions
-        },
-        rules: [
-          { required: true, message: '请选择平台', trigger: 'change' }
-        ]
+        }
       },
       {
         key: 'type',
@@ -191,7 +201,182 @@ export default {
         rules: [
           { required: true, message: '请输入所属者', trigger: 'blur' }
         ]
-      }
+      }// ,
+      // {
+      //   key: 'app',
+      //   type: 'Cascader',
+      //   label: '所属应用',
+      //   data: {
+      //     clearable: true,
+      //     props: {
+      //       multiple: false
+      //     },
+      //     placeholder: '请选择所属产品',
+      //     options: [
+      //       {
+      //         value: 1,
+      //         label: 'iOS',
+      //         children: [
+      //           {
+      //             value: 10,
+      //             label: '应用',
+      //             children: [
+      //               {
+      //                 value: 100,
+      //                 label: 'demo10'
+      //               },
+      //               {
+      //                 value: 101,
+      //                 label: 'demo11'
+      //               },
+      //               {
+      //                 value: 102,
+      //                 label: 'demo12'
+      //               }
+      //             ]
+      //           },
+      //           {
+      //             value: 11,
+      //             label: '组件',
+      //             children: [
+      //               {
+      //                 value: 110,
+      //                 label: 'component10'
+      //               },
+      //               {
+      //                 value: 111,
+      //                 label: 'component11'
+      //               },
+      //               {
+      //                 value: 112,
+      //                 label: 'component12'
+      //               }
+      //             ]
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         value: 2,
+      //         label: 'Android',
+      //         children: [
+      //           {
+      //             value: 20,
+      //             label: '应用',
+      //             children: [
+      //               {
+      //                 value: 200,
+      //                 label: 'demo20'
+      //               },
+      //               {
+      //                 value: 201,
+      //                 label: 'demo21'
+      //               },
+      //               {
+      //                 value: 202,
+      //                 label: 'demo22'
+      //               }
+      //             ]
+      //           },
+      //           {
+      //             value: 21,
+      //             label: '组件',
+      //             children: [
+      //               {
+      //                 value: 200,
+      //                 label: 'component20'
+      //               },
+      //               {
+      //                 value: 201,
+      //                 label: 'component21'
+      //               },
+      //               {
+      //                 value: 202,
+      //                 label: 'component22'
+      //               }
+      //             ]
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   }
+      // }
+      // {
+      //   key: 'like',
+      //   label: '喜好',
+      //   type: 'Checkbox',
+      //   data: {
+      //     value: [1],
+      //     options: [
+      //       {
+      //         value: 1,
+      //         label: '游戏'
+      //       },
+      //       {
+      //         value: 2,
+      //         label: '健身'
+      //       },
+      //       {
+      //         value: 3,
+      //         label: '音乐'
+      //       },
+      //       {
+      //         value: 4,
+      //         label: '爬山'
+      //       }
+      //     ]
+      //   }
+      // }
+      // {
+      //   key: 'insertime',
+      //   label: '时间',
+      //   type: 'DateTimePicker',
+      //   data: {
+      //     type: 'datetime',
+      //     value: undefined,
+      //     placeholder: '选择时间',
+      //     'default-time': undefined,
+      //     style: {
+      //       width: '200px'
+      //     }
+      //   },
+      //   rules: [
+      //     { required: true, message: '请选择时间', trigger: 'blur' }
+      //   ]
+      // },
+      // {
+      //   key: 'activetime',
+      //   label: '活动时间',
+      //   type: 'DateTimePicker',
+      //   data: {
+      //     'start-placeholder': '开始时间',
+      //     'end-placeholder': '结束时间',
+      //     style: {
+      //       width: '200px'
+      //     }
+      //   }
+      // }
+      // {
+      //   key: 'dropdown',
+      //   type: 'Dropdown',
+      //   label: '平台',
+      //   data: {
+      //     btnText: '选择平台',
+      //     options: platformOptions
+      //   }
+      // }
+      // {
+      //   key: 'customer',
+      //   type: 'Render',
+      //   label: '自定义组件',
+      //   data: {
+      //     // value: '自定义组件的Value'
+      //     render(h, self) {
+      //       return (
+      //         <div>hhhh</div>
+      //       )
+      //     }
+      //   }
+      // }
     ],
     clearForm: [
       {

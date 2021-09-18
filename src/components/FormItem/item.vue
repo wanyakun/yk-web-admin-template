@@ -3,18 +3,30 @@
 </template>
 
 <script>
-import itemInput from './Items/input'
-import itemSelect from './Items/select'
 import itemButton from './Items/button'
+import itemCascader from './Items/cascader'
+import itemCheckbox from './Items/checkbox'
+import itemDateTimePicker from './Items/dataTimePicker'
+import itemDropdown from './Items/dropdown'
+import itemInput from './Items/input'
+import itemRadio from './Items/radio'
+import itemRender from './Items/render'
+import itemSelect from './Items/select'
 import itemSwitch from './Items/switch'
 import itemTransfer from './Items/transfer'
 
 export default {
   name: 'FormItemComponent',
   components: {
-    itemInput,
-    itemSelect,
     itemButton,
+    itemCascader,
+    itemCheckbox,
+    itemDateTimePicker,
+    itemDropdown,
+    itemInput,
+    itemRadio,
+    itemRender,
+    itemSelect,
     itemSwitch,
     itemTransfer
   },

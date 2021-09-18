@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'line': data.line}">
+  <div class="transfer" :class="{'line': data.line}">
     <el-transfer
       filterable
       v-model="data.value"
@@ -23,6 +23,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../styles/variables";
+
+.transfer {
+  ::v-deep .el-checkbox__label {
+    font-size: $fontSize !important;
+  }
+}
 
 .input {
   width: $formItemWidth;
