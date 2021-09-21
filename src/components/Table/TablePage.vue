@@ -115,6 +115,8 @@ export default {
     return {
       searchForm: [],
       dataSource: [],
+      variables: {},
+      variablesOptions: [],
       currentPage: 1,
       pageSize: 10,
       loading: false,
@@ -200,8 +202,32 @@ export default {
   methods: {
     /** 初始化 **/
     applyOptions() {
+      this.handleVariables()
       this.handleForm(this.searchForm, 'searchForm')
-      // 处理searchForm的按钮
+    },
+    handleVariables() {
+      if (!this.data.variables) return
+      Object.keys(this.data.variables).forEach((item) => {
+        const { apiKey, value, handleResult = data => data } = this.data.variables[item]
+        if (apiKey) {
+          const result = this.sendApi(this.data.apis[apiKey])
+          const targetResult = this.execStringOrFunction(handleResult, result)
+          this.variablesOptions.forEach(({ variableKey, handleResult: handleResult2, key, type, valueKey = 'value', labelKey = 'label' }) => {
+            if (variableKey === item) {
+              let options
+              if (handleResult2) {
+                options = this.execStringOrFunction(handleResult2, targetResult)
+              } else {
+                options = targetResult.map((i) => ({ value: i[valueKey], label: i[labelKey] }))
+              }
+              this.setOptions(type, key, options)
+            }
+          })
+          this.variables[item] = targetResult
+        } else {
+          this.variables[item] = value
+        }
+      })
     },
     handleForm(form, key) {
       if (Array.isArray(this.data.forms[key])) {
@@ -252,7 +278,8 @@ export default {
             }
           }
         }
-        const targetForm = clone(this.data.forms[key])
+        const cloneForm = clone(this.data.forms[key])
+        const targetForm = this.handleFormOptions(cloneForm, key)
         targetForm.forEach((item) => {
           if (item.status === undefined) item.status = undefined
           if (!item.data) item.data = {}
@@ -271,6 +298,34 @@ export default {
         }
         form.push(...targetForm)
       }
+    },
+    handleFormOptions(form, key) {
+      return form.map(item => {
+        const { getOptionsApi, getOptionsFromVariables } = item
+        if (getOptionsApi && getOptionsApi.apiKey) {
+          item.getOptionApi = Object.assign(getOptionsApi, this.data.apis[getOptionsApi.apiKey]) // 实际请求是在From中
+        } else if (getOptionsFromVariables && getOptionsFromVariables.variableKey) {
+          // 变量中获取options，直接组装
+          const variable = this.variables[getOptionsFromVariables.variableKey]
+          if (!variable) {
+            this.variablesOptions.push({
+              type: key,
+              key: item.key,
+              ...getOptionsFromVariables
+            })
+          } else {
+            const { handleResult, valueKey = 'value', labelKey = 'label' } = getOptionsFromVariables
+            let options
+            if (handleResult) {
+              options = this.execStringOrFunction(handleResult, variable)
+            } else {
+              options = variable.map((i) => ({ value: i[valueKey], label: i[labelKey] }))
+            }
+            item.data.options = options
+          }
+        }
+        return item
+      })
     },
     /** 搜索查询 **/
     onSearch() {
@@ -393,7 +448,7 @@ export default {
           this.dialogForm.from = from
           if (this.dialogForm.key !== formKey) {
             this.dialogForm.type = 'popup'
-            this.dialogForm.form = formatFormData(this.data.forms[formKey])
+            this.dialogForm.form = this.handleFormOptions(formatFormData(this.data.forms[formKey]), 'dialogForm')
             this.dialogForm.key = formKey
             this.dialogForm.modalWidth = modalWidth
           }
@@ -517,6 +572,18 @@ export default {
       this.dialogForm.id = undefined
     },
     /** tool method **/
+    async sendApi(api, params = {}) {
+      if (!api) return
+      const { path = api, handleParams = data => data, handleResult = result => result, success = () => {}, error = () => {} } = api
+      const targetParams = this.execStringOrFunction(handleParams, params)
+      const request = new Request(path, targetParams)
+      const result = await request.start().catch((err) => {
+        this.execStringOrFunction(error, err)
+      })
+      const targetResult = this.execStringOrFunction(handleResult, result)
+      this.execStringOrFunction(success, targetResult)
+      return targetResult
+    },
     execStringOrFunction(func, params, ...r) { // 需要将params单独声明，在 eval 的函数中会使用
       if (typeof func === 'function') {
         return func.call(this, params, ...r)
@@ -529,6 +596,10 @@ export default {
         return
       }
       return eval(func) // 如果是字符串函数时通过 eval 执行，注意XXS攻击
+    },
+    setOptions(type, key, options) {
+      const item = this[type].find((item) => item.key === key) || { data: {}}
+      item.data.options = options
     },
     getValue(value) {
       return ((value !== undefined && value !== '') || (Array.isArray(value) && value.length)) ? value : undefined

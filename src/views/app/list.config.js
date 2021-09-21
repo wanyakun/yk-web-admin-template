@@ -31,8 +31,11 @@ export default {
         type: 'Select',
         data: {
           clearable: true,
-          placeholder: '平台',
-          options: platformOptions
+          placeholder: '平台'
+          // options: platformOptions
+        },
+        getOptionsFromVariables: {
+          variableKey: 'platform'
         }
       },
       {
@@ -41,7 +44,10 @@ export default {
         data: {
           clearable: true,
           placeholder: '类型',
-          options: typeOptions
+          // options: typeOptions
+        },
+        getOptionsFromVariables: {
+          variableKey: 'type'
         }
       },
       {
